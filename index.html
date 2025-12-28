@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Post-Graduation Life Predictor (Scientific Proof)</title>
+    <meta name="description" content="A scientifically proven tool to predict your post-graduation life difficulty. Definitely real science.">
+    <meta name="keywords" content="life predictor, humor, college life, graduation, chart, meme">
+    <meta property="og:title" content="Post-Graduation Life Predictor">
+    <meta property="og:description" content="Because life definitely follows linear regression.">
+    <meta name="twitter:title" content="Post-Graduation Life Predictor">
+    <meta name="twitter:description" content="Because life definitely follows linear regression.">
+
+    <script src="https://resource.trickle.so/vendor_lib/unpkg/react@18/umd/react.production.min.js"></script>
+    <script src="https://resource.trickle.so/vendor_lib/unpkg/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://resource.trickle.so/vendor_lib/unpkg/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.9/dist/chart.umd.min.js"></script>
+    <link href="https://resource.trickle.so/vendor_lib/unpkg/lucide-static@0.516.0/font/lucide.css" rel="stylesheet">
+
+    <script>
+        // Store Chart.js in window to avoid conflicts
+        window.ChartJS = window.Chart;
+    </script>
+
+    <style type="text/tailwindcss">
+    @layer theme {
+        :root {
+            --primary-color: #0f172a; /* Slate 900 */
+            --secondary-color: #64748b; /* Slate 500 */
+            --accent-color: #ef4444; /* Red 500 for the 'X' and warnings */
+            --bg-color: #f8fafc; /* Slate 50 */
+            --card-bg: #ffffff;
+        }
+    }
+
+    @layer base {
+        body {
+            @apply bg-[var(--bg-color)] text-[var(--primary-color)] font-sans antialiased;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            @apply tracking-tight;
+        }
+    }
+
+    @layer components {
+        .btn-primary {
+            @apply px-6 py-3 bg-[var(--primary-color)] text-white font-medium rounded-md hover:bg-opacity-90 transition-all active:scale-95 shadow-lg shadow-slate-200;
+        }
+        .card {
+            @apply bg-[var(--card-bg)] rounded-lg border border-slate-200 shadow-sm p-6 md:p-8;
+        }
+        .input-field {
+            @apply w-full px-4 py-3 rounded-md border border-slate-300 focus:border-[var(--primary-color)] focus:ring-1 focus:ring-[var(--primary-color)] outline-none transition-colors;
+        }
+        .label {
+            @apply block text-sm font-semibold text-[var(--secondary-color)] mb-2 uppercase tracking-wider;
+        }
+    }
+    </style>
+
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel" src="components/Hero.js"></script>
+    <script type="text/babel" src="components/PredictionForm.js"></script>
+    <script type="text/babel" src="components/ResultDisplay.js"></script>
+    <script type="text/babel" src="components/LifeChart.js"></script>
+    <script type="text/babel" src="components/Footer.js"></script>
+    <script type="text/babel" src="app.js"></script>
+</body>
+</html>
