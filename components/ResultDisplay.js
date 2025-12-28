@@ -1,5 +1,7 @@
 function ResultDisplay({ data }) {
-    const { isGraduated, role } = data;
+    if (!data) return null;
+
+    const { isGraduated = false, role = "" } = data;
 
     const memeDatabase = {
         common: [
@@ -80,12 +82,12 @@ function ResultDisplay({ data }) {
     return (
         <div className="text-center space-y-8">
 
-            {/* Status Icon */}
             <div className={`inline-block p-4 rounded-full ${isGraduated ? 'bg-red-50' : 'bg-green-50'}`}>
-                <div className={`${isGraduated ? 'icon-triangle-alert text-red-600' : 'icon-code text-green-600'} text-4xl`}></div>
+                <div className="text-4xl">
+                    {isGraduated ? "⚠️" : "💻"}
+                </div>
             </div>
 
-            {/* Stage Header */}
             <div>
                 <h2 className="text-3xl font-extrabold text-[var(--primary-color)]">
                     {stageMeta[stage].title}
@@ -98,51 +100,26 @@ function ResultDisplay({ data }) {
                 </span>
             </div>
 
-            {/* Meme Card */}
-            <div className="relative p-6 bg-slate-900 text-white rounded-xl shadow-2xl overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500"></div>
-
-                <h3 className="text-4xl font-black uppercase text-yellow-400 tracking-tight">
+            <div className="relative p-6 bg-slate-900 text-white rounded-xl shadow-2xl">
+                <h3 className="text-4xl font-black uppercase text-yellow-400">
                     {selectedMeme.text}
                 </h3>
-
                 <p className="mt-4 text-slate-300 font-mono border-t border-slate-700 pt-3">
                     {selectedMeme.sub}
                 </p>
-
-                {isGraduated && (
-                    <div className="mt-4 inline-block px-4 py-1 bg-red-600 text-white text-xs font-bold rounded-full animate-pulse">
-                        Dukh | Dard | Peeda
-                    </div>
-                )}
             </div>
 
-            {/* Burnout Meter */}
             <div className={`text-2xl font-bold ${isGraduated ? 'text-red-600' : 'text-green-600'}`}>
                 Burnout Level: {difficultyScore}%
-                <div className="text-sm font-mono text-slate-500">
-                    {isGraduated
-                        ? "System overheating. Please cry and restart."
-                        : "Battery full. Future updates will drain it."}
-                </div>
             </div>
 
-            {/* Expert Opinion */}
-            <div className="relative bg-slate-50 border-l-4 border-l-[var(--primary-color)] p-6 rounded">
-                <div className="absolute -top-3 -left-2 bg-[var(--primary-color)] text-white text-xs px-2 py-1 rounded shadow -rotate-2">
-                    Expert Opinion
-                </div>
-
+            <div className="bg-slate-50 border-l-4 border-l-[var(--primary-color)] p-6 rounded">
                 <p className="text-xl italic font-serif text-slate-800">
                     {expertQuote}
                 </p>
-
-                <div className="mt-4 text-xs text-slate-400 font-mono">
-                    {isGraduated
-                        ? "* Recommended: Chai → Code → Existential Crisis → Repeat"
-                        : "* Recommended: College enjoy kar le bhai, warning hai"}
-                </div>
             </div>
         </div>
     );
 }
+
+export default ResultDisplay;
