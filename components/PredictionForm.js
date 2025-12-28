@@ -5,18 +5,13 @@ function PredictionForm({ onPredict }) {
         gradAge: ''
     });
     const [loading, setLoading] = React.useState(false);
-
     const handleSubmit = (e) => {
         e.preventDefault();
-        
         if (!formData.currentAge || !formData.gradAge || !formData.role) {
             alert('Arre bhai! Form toh poora bharo (Please fill all fields).');
             return;
         }
-
         setLoading(true);
-
-
         setTimeout(() => {
             const current = parseInt(formData.currentAge);
             const grad = parseInt(formData.gradAge);
