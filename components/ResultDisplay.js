@@ -1,125 +1,129 @@
 function ResultDisplay({ data }) {
-    if (!data) return null;
+    const { isGraduated, role } = data;
 
-    const { isGraduated = false, role = "" } = data;
-
+    // Meme database
     const memeDatabase = {
         common: [
-            { text: "Moye Moye...", sub: "Life update: Error 500 – Internal Soul Error." },
-            { text: "Khatam. Tata. Bye Bye.", sub: "Career 404 – Not Found." },
-            { text: "Seh Lenge Thoda…", sub: "Bolne ke liye keh diya, seh koi nahi raha." },
-            { text: "Ye Dukh Kahe Khatam Nahi Hota?", sub: "While(true) { sadness++; }" },
-            { text: "Sab Moh Maya Hai", sub: "Except EMI. EMI is permanent." }
+            { text: "Moye Moye...", sub: "Life update: Error 500 Internal Soul Error." },
+            { text: "Khatam. Tata. Bye Bye.", sub: "Career 404 Not Found." },
+            { text: "Seh Lenge Thoda...", sub: "Housla rakho, weekend aane wala hai." },
+            { text: "Control Uday Control!", sub: "Gussa nahi, code karo." },
+            { text: "Ye Dukh Kahe Khatam Nahi Hota?", sub: "Infinite loop of sadness detected." }
+        ],
+        css: [
+            { text: "Pixel Phat Gaya!", sub: "Z-index: 99999 bhi kaam nahi aaya." },
+            { text: "Bhai color change kar de.", sub: "Client: 'Make it more popping' (whatever that means)." },
+            { text: "Responsive nahi hai bro.", sub: "Mobile view mein website ki halat kharaab hai." }
+        ],
+        devops: [
+            { text: "Server Down Hai!", sub: "Raat ke 3 baje pager duty call incoming..." },
+            { text: "Kubernetes samjh nahi aa raha.", sub: "Yaml files mein zindagii ulajh gayi hai." },
+            { text: "It works on my machine!", sub: "Docker container mein aag lagi hai." }
         ],
         backend: [
-            { text: "API Down Hai", sub: "Client: ‘Just restart the server na.’" },
-            { text: "Database Chala Gaya", sub: "SELECT * FROM happiness; → 0 rows." },
-            { text: "Prod Pe Bug", sub: "DevOps ne dekha, bola: ‘Mera nahi hai.’" }
-        ],
-        frontend: [
-            { text: "Pixel Hil Gaya", sub: "Designer bola: ‘Bas thoda left.’" },
-            { text: "Responsive Hai Na?", sub: "Mobile pe website ro rahi hai." }
+            { text: "Database connection failed.", sub: "Select * from life where happiness = true; -> 0 rows returned." },
+            { text: "API response: 502 Bad Gateway.", sub: "Backend walo ki koi izzat nahi hai." },
+            { text: "Migration fail ho gaya.", sub: "Production DB uda diya galti se?" }
         ],
         fullstack: [
-            { text: "Full Stack Developer", sub: "Kaam: Sab. Salary: Junior." },
-            { text: "Div Center Kar Raha Hu Backend Mein", sub: "Confusion hi confusion." }
+            { text: "Jack of all trades, Master of none.", sub: "Frontend bhi karlo, Backend bhi karlo, Rona bhi karlo." },
+            { text: "Div center kar raha hu backend mein.", sub: "Confusion hi confusion hai, solution kuch pata nahi." },
+            { text: "Full Stack Developer = Full Stress Developer.", sub: "Salary: Junior, Kaam: Senior." }
+        ],
+        manager: [
+            { text: "Update kab doge?", sub: "Jaldi karo, client sar pe baitha hai." },
+            { text: "Is it scalable?", sub: "Excel sheet maintain karna development nahi hota boss." },
+            { text: "Let's sync up.", sub: "Ek aur meeting? Maar hi daalo mujhe." }
         ],
         data: [
-            { text: "Data Clean Kaun Karega?", sub: "80% cleaning, 20% regret." },
-            { text: "Excel hi Database Hai", sub: "Client certified architecture." }
+            { text: "Data Clean kon karega?", sub: "80% time cleaning, 20% time crying." },
+            { text: "Excel is not a Database.", sub: "Par client ko kaun samjhaye?" },
+            { text: "Pie Chart mat banao!", sub: "Data visualization ke naam pe rangoli bana di." }
+        ],
+        medical: [
+            { text: "Paracetamol kha lo.", sub: "5 saal padhai karke bas yahi seekha?" },
+            { text: "Neend? Woh kya hoti hai?", sub: "Internship = Slavery with extra steps." },
+            { text: "Handwriting kharab ho gayi.", sub: "Ab toh khud ko bhi samajh nahi aata kya likha hai." }
+        ],
+        finance: [
+            { text: "Balance Sheet Match Nahi Hui!", sub: "1 rupay ka ghotala kahan se aa gaya?" },
+            { text: "Audit Season is Coming.", sub: "Ghar walo ko bol do main zinda hoon." },
+            { text: "CA ban na aasaan hai...", sub: "...said no one ever." }
+        ],
+        engineer: [
+            { text: "Core company mili?", sub: "Akhir mein IT company hi join karni padi." },
+            { text: "Govt Job ki Taiyari.", sub: "SSC, UPSC, GATE... sab de diya." },
+            { text: "Site pe dhoop hai.", sub: "Civil engineer ki life = Mitti aur cement." }
         ]
     };
 
+    // Expert opinions (Shark Tank style & Bollywood)
     const expertOpinions = [
-        "“Tumse na ho payega beta.” – Ramadhir Singh",
-        "“Yeh sab doglapan hai.” – Ashneer Grover",
-        "“Ismein meri expertise nahi hai, so I’m out.” – Namita",
-        "“Aao kabhi haveli pe… code review ke liye.”",
-        "“Chilla chilla ke sabko scheme bata de!”"
+        "“Yeh sab doglapan hai. Main tera code band karwa dunga.” - Ashneer G",
+        "“Tumse na ho payega beta. Tum rehne do.” - Ramadhir Singh",
+        "“Bilkul bakwaas idea hai. Ismein meri expertise nahi hai, so I am out.” - Namita",
+        "“Bhai paisa ho toh kya kuch nahi ho sakta... par tere paas skill nahi hai.”",
+        "“Chilla chilla ke sabko scheme bata de!” - Raju",
+        "“Aao kabhi haveli pe (code review ke liye).”"
     ];
 
+    // Select random content
     const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
-
+    
+    // Get role specific content or fallback to common
     const roleContent = memeDatabase[role] || [];
-    const memePool = [...memeDatabase.common, ...roleContent];
-
-    const selectedMeme = getRandom(memePool);
+    const allOptions = [...memeDatabase.common, ...roleContent];
+    const selectedMeme = getRandom(allOptions);
     const expertQuote = getRandom(expertOpinions);
 
-    const difficultyScore = isGraduated
-        ? Math.floor(Math.random() * 11) + 90
-        : Math.floor(Math.random() * 30) + 10;
-
-    const stage =
-        !isGraduated ? "SAFE" :
-        difficultyScore < 93 ? "COPIUM" :
-        difficultyScore < 97 ? "BURNOUT" :
-        "ENDGAME";
-
-    const stageMeta = {
-        SAFE: {
-            title: "Abhi Bhi Bach Sakte Ho",
-            subtitle: "College mein ho. Please enjoy while stocks last.",
-            badge: "SAFE ZONE"
-        },
-        COPIUM: {
-            title: "Reality Ne Knock Kar Diya Hai",
-            subtitle: "LinkedIn pe sab successful lag rahe hain. Lag rahe hain.",
-            badge: "COPE MODE"
-        },
-        BURNOUT: {
-            title: "Majdoor Era Unlocked",
-            subtitle: "Sunday ko bhi Monday ka dukh ho raha hai.",
-            badge: "BURNOUT"
-        },
-        ENDGAME: {
-            title: "Endgame Achieved",
-            subtitle: "Laude lag chuke hain. Ab bas EMI aur back pain.",
-            badge: "SATYANASH"
-        }
-    };
+    const difficultyScore = isGraduated ? Math.floor(Math.random() * (100 - 90 + 1) + 90) : 0;
 
     return (
-        <div className="text-center space-y-8">
+        <div className="text-center space-y-6" data-name="result-display" data-file="components/ResultDisplay.js">
+            <div className={`inline-block p-4 rounded-full ${isGraduated ? 'bg-red-50' : 'bg-green-50'} mb-2`}>
+                <div className={`${isGraduated ? 'icon-triangle-alert text-red-600' : 'icon-code text-green-600'} text-4xl`}></div>
+            </div>
 
-            <div className={`inline-block p-4 rounded-full ${isGraduated ? 'bg-red-50' : 'bg-green-50'}`}>
-                <div className="text-4xl">
-                    {isGraduated ? "⚠️" : "💻"}
+            <div className="space-y-2">
+                <h2 className="text-2xl font-bold text-[var(--primary-color)]">
+                    {isGraduated ? "Ab Pachtaye Hot Kya..." : "Abhi Bhi Time Hai..."}
+                </h2>
+                <div className="mt-4 p-6 bg-slate-900 text-white rounded-lg shadow-xl relative overflow-hidden">
+                    {/* Meme Card Look */}
+                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500"></div>
+                    
+                    <h3 className="text-3xl md:text-4xl font-black mb-2 uppercase tracking-tighter text-yellow-400">
+                        {selectedMeme.text}
+                    </h3>
+                    <p className="text-slate-300 text-lg font-mono border-t border-slate-700 pt-3 mt-3 inline-block">
+                        {selectedMeme.sub}
+                    </p>
+
+                    {isGraduated && (
+                        <div className="mt-4 inline-flex items-center px-3 py-1 bg-red-600 text-white text-xs font-bold rounded uppercase tracking-wider animate-pulse">
+                            Dukh | Dard | Peeda
+                        </div>
+                    )}
                 </div>
             </div>
 
-            <div>
-                <h2 className="text-3xl font-extrabold text-[var(--primary-color)]">
-                    {stageMeta[stage].title}
-                </h2>
-                <p className="text-slate-500 italic mt-1">
-                    {stageMeta[stage].subtitle}
-                </p>
-                <span className="inline-block mt-3 px-3 py-1 text-xs font-bold uppercase bg-black text-white rounded">
-                    {stageMeta[stage].badge}
-                </span>
-            </div>
-
-            <div className="relative p-6 bg-slate-900 text-white rounded-xl shadow-2xl">
-                <h3 className="text-4xl font-black uppercase text-yellow-400">
-                    {selectedMeme.text}
-                </h3>
-                <p className="mt-4 text-slate-300 font-mono border-t border-slate-700 pt-3">
-                    {selectedMeme.sub}
-                </p>
-            </div>
-
-            <div className={`text-2xl font-bold ${isGraduated ? 'text-red-600' : 'text-green-600'}`}>
-                Burnout Level: {difficultyScore}%
-            </div>
-
-            <div className="bg-slate-50 border-l-4 border-l-[var(--primary-color)] p-6 rounded">
-                <p className="text-xl italic font-serif text-slate-800">
+            {isGraduated && (
+                 <div className="text-xl font-bold text-red-600">
+                    Burnout Level: {difficultyScore}% (Satya Naash)
+                 </div>
+            )}
+            
+            <div className="card bg-slate-50 border-l-4 border-l-[var(--primary-color)] relative">
+                <div className="absolute -top-3 -left-2 bg-[var(--primary-color)] text-white text-xs px-2 py-1 rounded shadow transform -rotate-2">
+                    Shark Tank Judge Says
+                </div>
+                <p className="text-xl font-serif italic text-slate-800 leading-relaxed mt-2">
                     {expertQuote}
                 </p>
+                <div className="mt-4 text-xs text-slate-400 font-mono">
+                     {isGraduated ? "* Recommended: Chai piyo, code likho (repeat until death)" : "* Recommended: LeetCode chalu kar de bhai"}
+                </div>
             </div>
         </div>
     );
 }
-
-export default ResultDisplay;
