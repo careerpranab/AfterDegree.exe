@@ -1,6 +1,6 @@
 function PredictionForm({ onPredict }) {
     const [formData, setFormData] = React.useState({
-        gender: '',
+        role: '',
         currentAge: '',
         gradAge: ''
     });
@@ -9,14 +9,14 @@ function PredictionForm({ onPredict }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         
-        if (!formData.currentAge || !formData.gradAge) {
-            alert('Please fill in all numerical fields scientifically.');
+        if (!formData.currentAge || !formData.gradAge || !formData.role) {
+            alert('Arre bhai! Form toh poora bharo (Please fill all fields).');
             return;
         }
 
         setLoading(true);
 
-        // Fake calculation delay
+
         setTimeout(() => {
             const current = parseInt(formData.currentAge);
             const grad = parseInt(formData.gradAge);
@@ -36,22 +36,28 @@ function PredictionForm({ onPredict }) {
         <div className="card" data-name="prediction-form" data-file="components/PredictionForm.js">
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                    <label className="label">Gender (For wage gap calculations - JK 🤪)</label>
+                    <label className="label">Kaun ho tum? (Select Your Role)</label>
                     <select 
                         className="input-field bg-white"
-                        value={formData.gender}
-                        onChange={(e) => setFormData({...formData, gender: e.target.value})}
+                        value={formData.role}
+                        onChange={(e) => setFormData({...formData, role: e.target.value})}
                     >
-                        <option value="">Select Gender</option>
-                        <option value="male">Male 👨</option>
-                        <option value="female">Female 👩</option>
-                        <option value="prefer_not">Prefer not to say (Mysterious, I like it 🎭)</option>
+                        <option value="">Select Role</option>
+                        <option value="css">CSS Student (Centering div specialist)</option>
+                        <option value="devops">DevOps (Server restart karne wale)</option>
+                        <option value="backend">Backend Dev (API banata hoon bro)</option>
+                        <option value="fullstack">Fullstack (Majdoor)</option>
+                        <option value="data">Data Analyst (Excel ko AI bolne wale)</option>
+                        <option value="medical">Medical Student (Neend is a myth)</option>
+                        <option value="finance">CA / Finance (Balance sheet match nahi hui)</option>
+                        <option value="engineer">Mechanical/Civil (Govt job aspirant)</option>
+                        <option value="manager">Project Manager (Bas update chahiye)</option>
                     </select>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label className="label">Current Age (Time wasted so far ⏳)</label>
+                        <label className="label">Abhi kitne saal ke ho? (Current Age)</label>
                         <input 
                             type="number" 
                             className="input-field"
@@ -63,7 +69,7 @@ function PredictionForm({ onPredict }) {
                         />
                     </div>
                     <div>
-                        <label className="label">Graduation Age (The Beginning of the End 🎓)</label>
+                        <label className="label">College kab khatam hoga? (Grad Year)</label>
                         <input 
                             type="number" 
                             className="input-field"
@@ -85,12 +91,12 @@ function PredictionForm({ onPredict }) {
                         {loading ? (
                             <>
                                 <div className="icon-loader animate-spin"></div>
-                                <span>Consulting the Stars ✨ & EMI Schedule 💸...</span>
+                                <span>Kundli matching with bugs...</span>
                             </>
                         ) : (
                             <>
-                                <div className="icon-skull"></div>
-                                <span>Calculate My Suffering 🔮</span>
+                                <div className="icon-wand"></div>
+                                <span>Bhavishya Batao (Predict Future)</span>
                             </>
                         )}
                     </button>
