@@ -1,4 +1,4 @@
-// Important: DO NOT remove this `ErrorBoundary` component.
+
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
